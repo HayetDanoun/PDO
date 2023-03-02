@@ -32,17 +32,19 @@
 <?php
     $errors = [];
     if(!empty($_POST)){
-        if(isset($_POST['firstname']) && strlen($_POST['firstname']) > 45)
-            $errors[] = 'Le champ Firstname doit faire moins de 45 caracteres';
-        if(isset($_POST['lastname']) && strlen($_POST['lastname']) > 45)
-            $errors[] = 'Le champ Lastname doit faire moins de 45 caracteres';
-
+        
+        if(isset($_POST['firstname']) )
+                if(strlen($_POST['firstname']) > 45) $errors[] = 'Le champ Firstname doit faire moins de 45 caracteres';
+                if(empty($_POST['firstname']) || trim($_POST['firstname']) === "")  $errors[] = 'Le champ Firstname doit etre rempli';
+        if(isset($_POST['lastname']) )
+                if(strlen($_POST['lastname']) > 45) $errors[] = 'Le champ Lastname doit faire moins de 45 caracteres';
+                if(empty($_POST['lastname']) || trim($_POST['lastname']) === "")  $errors[] = 'Le champ Lastname doit etre rempli';
 
         //var_dump($errors);
         foreach($errors as $value){
             echo $value . '<br>' ;
         }
-        if(empty($error)){
+        if(empty($errors)){
 
             $query = 'INSERT INTO friend (firstname,lastname) VALUES (:firstname,:lastname)';
             $statement = $pdo->prepare($query);
